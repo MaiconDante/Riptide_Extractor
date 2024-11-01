@@ -4,7 +4,11 @@ from tkinter import PhotoImage, filedialog
 from time import strftime
 from pytubefix import YouTube
 from threading import Thread
-import os
+import os, ssl, platform
+
+# Ignora a verificação do certificado SSL se for macOS
+if platform.system() == "Darwin":  # 'Darwin' é o nome do sistema operacional do macOS
+    ssl._create_default_https_context = ssl._create_unverified_context
 
 class functs():    
     def threading_MP4(self):
@@ -13,11 +17,12 @@ class functs():
            
     def function_MP4(self):
         try:
+            print("mp4 triggered")
             link = self.box_link.get()  # Obtendo o link do input
             if link is None or link.strip() == "":
                 self.label_info.configure(text="Ocorreu um erro, cole ou digite um link |VÁLIDO|")  
             else:
-                yt = YouTube(link, on_progress_callback=self.progress_function)  # Callback para progresso
+                yt = YouTube(link)
                 ys = yt.streams.get_highest_resolution()
                 filepath = filedialog.asksaveasfilename(defaultextension=".mp4", filetypes=[("MP4 files", "*.mp4")])
                 if filepath:  # Verifica se o usuário escolheu um caminho
@@ -28,6 +33,7 @@ class functs():
                     self.label_info.configure(text="Download cancelado ou falhou !!!")
             self.box_link.delete(0, 'end')  # Limpa o campo de link
         except Exception as e:
+            print(e)
             self.label_info.configure(text="Ocorreu um erro, cole ou digite um link |VÁLIDO|")
             self.box_link.delete(0, 'end')  # Limpa o campo de link
 
@@ -37,11 +43,12 @@ class functs():
         
     def function_MP3(self):
         try:
+            print("mp3 triggered")
             link = self.box_link.get()  # Obtendo o link do input
             if link is None or link.strip() == "":
                 self.label_info.configure(text="Ocorreu um erro, cole ou digite um link |VÁLIDO|")
             else:
-                yt = YouTube(link, on_progress_callback=self.progress_function)  # Callback para progresso
+                yt = YouTube(link)
                 ys = yt.streams.get_audio_only()
                 filepath = filedialog.asksaveasfilename(defaultextension=".mp3", filetypes=[("MP3 files", "*.mp3")])
                 if filepath:  # Verifica se o usuário escolheu um caminho
@@ -51,11 +58,10 @@ class functs():
                 else:
                     self.label_info.configure(text="Download cancelado ou falhou !!!")
                 self.box_link.delete(0, 'end')  # Limpa o campo de link
-                self.box_link.insert(0, "Digite ou Cole aqui o seu link aqui !!!")
         except Exception as e:
+            print(e)
             self.label_info.configure(text="Ocorreu um erro, cole ou digite um link |VÁLIDO|")
-            self.box_link.delete(0, 'end')  # Limpa o campo de link   
-            self.box_link.insert(0, "Digite ou Cole aqui o seu link aqui !!!")    
+            self.box_link.delete(0, 'end')  # Limpa o campo de link    
 
 # Variável root recebendo comando CTk que faz aparecer a janela
 root = ctk.CTk()
