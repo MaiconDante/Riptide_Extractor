@@ -16,6 +16,10 @@ class Application():
         self.screen()
         self.appearance()
         self.frames_screen_up()
+        self.frames_screen_down()
+        self.buttons()
+        self.clock()
+        self.result()
         root.mainloop()
 
     # Função com todas caracteristicas da janela que foi configurada
@@ -80,6 +84,117 @@ class Application():
                             relheight=0.6)
         self.text_box.insert("2.2", "         | Extração de conteúdo do video do YOUTUBE |\n\n       | EXTRAIR somente o audio, gerando arquivo MP3 |\n\n       | EXTRAIR o video completo gerando arquivo MP4 |")
         self.text_box.configure(state="disabled") # Aqui desabilita a possibilidade de editar no textbox
-     
+
+    # Função que realiza criação do frame parte de baixo do aplicativo definindo conteudo que irá compor dentro
+    def frames_screen_down(self):
+        self.framedown = ctk.CTkFrame(self.root,
+                                      fg_color="#ffc1a6",
+                                      bg_color="#d66a04",
+                                      corner_radius=50)
+        self.framedown.place(relx=0.01,
+                             rely=0.41,
+                             relwidth=0.98,
+                             relheight=0.57)
+        self.label_link = ctk.CTkLabel(self.framedown,
+                                       width=20, height=20,
+                                       text="LINK",
+                                       font=("Arial Black", 18),
+                                       corner_radius=40, fg_color="#f55e07")
+        self.label_link.place(relx=0.1,
+                              rely=0.2,
+                              relwidth=0.2,
+                              relheight=0.15)
+        self.box_link = ctk.CTkEntry(self.framedown,
+                                     width=50,
+                                     height=50,
+                                     corner_radius=10,
+                                     fg_color="#f5ac82",
+                                     text_color="gray")
+        self.box_link.place(relx=0.31,
+                            rely=0.2,
+                            relwidth=0.6,
+                            relheight=0.15)
+        self.box_link.insert(0, "Digite ou Cole aqui o seu link aqui !!!")
+        self.box_link.bind("<FocusIn>", self.on_entry_click)
+        self.box_link.bind("<FocusOut>", self.on_focusout)
+
+    def on_entry_click(self, event):
+        if self.box_link.get() == "Digite ou Cole aqui o seu link aqui !!!":
+            self.box_link.delete(0, "end") 
+            self.box_link.configure(text_color="gray") 
+
+    def on_focusout(self, event):
+        if self.box_link.get() == "":
+            self.box_link.insert(0, "Digite ou Cole aqui o seu link aqui !!!")
+            self.box_link.configure(text_color="gray")  
+            
+    def buttons(self):
+        self.btn_mp3 = ctk.CTkButton(self.framedown,
+                                     text="GERAR |MP3|",
+                                     font=("Arial Black", 12),
+                                     width=50, height=50,
+                                     corner_radius=50,
+                                     fg_color="#992002",
+                                     hover_color="#04026b",
+                                     command="")
+        self.btn_mp3.place(relx=0.31,
+                           rely=0.5,
+                           relwidth=0.2,
+                           relheight=0.15)
+        
+        self.btn_mp4 = ctk.CTkButton(self.framedown,
+                                     text="GERAR |MP4|",
+                                     font=("Arial Black", 12),
+                                     width=50,
+                                     height=50,
+                                     corner_radius=50,
+                                     fg_color="#992002",
+                                     hover_color="#04026b",
+                                     command="")
+        self.btn_mp4.place(relx=0.53,
+                           rely=0.5,
+                           relwidth=0.2,
+                           relheight=0.15)
+        
+        self.btn_cancel = ctk.CTkButton(self.framedown,
+                                    text="FECHAR",
+                                    font=("Arial Black", 12),
+                                    width=50,
+                                    height=50,
+                                    corner_radius=50,
+                                    fg_color="#992002",
+                                    hover_color="#04026b",
+                                    command=self.root.destroy)  # Fechar a janela
+        self.btn_cancel.place(relx=0.15,
+                           rely=0.51,
+                           relwidth=0.13,
+                           relheight=0.15)
+    
+    def clock(self):
+        def time():
+            string = strftime("%H: %M: %S %p")
+            self.clock_lbl.configure(text=string)
+            self.clock_lbl.after(500, time)
+            
+        self.clock_lbl = ctk.CTkLabel(self.framedown,
+                                      font=("ds-digital", 15, "bold"),
+                                      fg_color="transparent",
+                                      text_color="#521205")
+        self.clock_lbl.place(relx=0.75,
+                             rely=0.5,
+                             relwidth=0.15,
+                             relheight=0.15)
+        time()   
+    
+    def result(self):
+        self.label_info = ctk.CTkLabel(self.framedown,
+                                       text="O seu vídeo será convertido... | ESCOLHA E CLIQUE |",
+                                       text_color="black", font=("Arial", 18, "bold"),
+                                       fg_color="#ff7f4d",
+                                       corner_radius=50)
+        self.label_info.place(relx=0.12,
+                              rely=0.75,
+                              relwidth=0.75,
+                              relheight=0.15)
 
 Application() 
