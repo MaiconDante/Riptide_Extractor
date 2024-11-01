@@ -81,8 +81,8 @@ class Application(functs):
     def screen(self):
         self.root.title("| Riptide Extractor Link |") # Titulo da janela do aplicativo
         # Carrega a imagem e converte para PhotoImage
-        icon_path = "./Riptide_Extractor/riptideicon.png"
-        self.icon_image = ImageTk.PhotoImage(Image.open(icon_path))
+        self.icon_path = "./Riptide_Extractor/riptideicon.png"
+        self.icon_image = ImageTk.PhotoImage(Image.open(self.icon_path))
         # Define o ícone da janela
         self.root.iconphoto(False, self.icon_image)
         self.widthscreen = 800 # Tamanho da largura da tela do aplicativo 
@@ -141,10 +141,10 @@ class Application(functs):
                                        text_color="#f55e07",
                                        border_width=2)
         self.text_box.place(relx=0.41,
-                            rely=0.3,
+                            rely=0.31,
                             relwidth=0.48,
                             relheight=0.6)
-        self.text_box.insert("2.2", "         | Extração de conteúdo do video do YOUTUBE |\n\n       | EXTRAIR somente o audio, gerando arquivo MP3 |\n\n       | EXTRAIR o video completo gerando arquivo MP4 |")
+        self.text_box.insert("2.2", "       | Extração de conteúdo do video do YOUTUBE |\n\n     | EXTRAIR somente o audio, gerando arquivo MP3 |\n\n     | EXTRAIR o video completo gerando arquivo MP4 |")
         self.text_box.configure(state="disabled") # Aqui desabilita a possibilidade de editar no textbox
 
     # Função que realiza criação do frame parte de baixo do aplicativo definindo conteudo que irá compor dentro
