@@ -1,10 +1,12 @@
 # Importando bibliotecas do projeto
 import customtkinter as ctk
-from tkinter import PhotoImage, filedialog
+from customtkinter import CTkImage
+from tkinter import filedialog
 from time import strftime
 from pytubefix import YouTube
 from threading import Thread
 import os, ssl, platform
+from PIL import Image, ImageTk
 
 # Ignora a verificação do certificado SSL se for macOS
 if platform.system() == "Darwin":  # 'Darwin' é o nome do sistema operacional do macOS
@@ -78,6 +80,11 @@ class Application(functs):
     # Função com todas caracteristicas da janela que foi configurada
     def screen(self):
         self.root.title("| Riptide Extractor Link |") # Titulo da janela do aplicativo
+        # Carrega a imagem e converte para PhotoImage
+        icon_path = "./Riptide_Extractor/riptideicon.png"
+        self.icon_image = ImageTk.PhotoImage(Image.open(icon_path))
+        # Define o ícone da janela
+        self.root.iconphoto(False, self.icon_image)
         self.widthscreen = 800 # Tamanho da largura da tela do aplicativo 
         self.heightscreen = 500 # Tamanho da altura da tela do aplicativo
 
@@ -106,13 +113,15 @@ class Application(functs):
                            rely=0.01,
                            relwidth=0.98,
                            relheight=0.4)
-        self.img = PhotoImage(file="./Riptide_Extractor/riptidelogo.png")
+        self.img_path = "./Riptide_Extractor/riptidelogo.png"
+        self.img = Image.open(self.img_path)  # Abra a imagem usando Pillow
+        self.ctk_img = CTkImage(self.img, size=(160,160))
         self.label_logo = ctk.CTkLabel(self.frameup,
                                        width=50,
                                        height=50,
-                                       image=self.img,
+                                       image=self.ctk_img,
                                        text="")
-        self.label_logo.place(relx=0.043,
+        self.label_logo.place(relx=0.047,
                               rely=0.19,
                               relwidth=0.28,
                               relheight=0.75)

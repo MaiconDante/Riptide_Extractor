@@ -9,6 +9,7 @@ readme = "README.md"
 python = "^3.12"
 customtkinter = "^5.2.2"
 pytubefix = "^8.2.0"
+pillow = "^11.0.0"
 
 
 [build-system]
