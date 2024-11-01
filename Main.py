@@ -6,11 +6,62 @@ from pytubefix import YouTube
 from threading import Thread
 import os
 
+class functs():    
+    def threading_MP4(self):
+    # Executa o download em uma thread separada
+        Thread(target=self.function_MP4).start()  
+           
+    def function_MP4(self):
+        try:
+            link = self.box_link.get()  # Obtendo o link do input
+            if link is None or link.strip() == "":
+                self.label_info.configure(text="Ocorreu um erro, cole ou digite um link |VÁLIDO|")  
+            else:
+                yt = YouTube(link, on_progress_callback=self.progress_function)  # Callback para progresso
+                ys = yt.streams.get_highest_resolution()
+                filepath = filedialog.asksaveasfilename(defaultextension=".mp4", filetypes=[("MP4 files", "*.mp4")])
+                if filepath:  # Verifica se o usuário escolheu um caminho
+                    self.label_info.configure(text="Realizando o Download | AGUARDE |")
+                    ys.download(output_path=os.path.dirname(filepath), filename=os.path.basename(filepath))
+                    self.label_info.configure(text="Seu vídeo foi baixado com sucesso em formato MP4!")
+                else:
+                    self.label_info.configure(text="Download cancelado ou falhou !!!")
+            self.box_link.delete(0, 'end')  # Limpa o campo de link
+        except Exception as e:
+            self.label_info.configure(text="Ocorreu um erro, cole ou digite um link |VÁLIDO|")
+            self.box_link.delete(0, 'end')  # Limpa o campo de link
+
+    def threading_MP3(self):
+     # Executa o download em uma thread separada
+        Thread(target=self.function_MP3).start()
+        
+    def function_MP3(self):
+        try:
+            link = self.box_link.get()  # Obtendo o link do input
+            if link is None or link.strip() == "":
+                self.label_info.configure(text="Ocorreu um erro, cole ou digite um link |VÁLIDO|")
+            else:
+                yt = YouTube(link, on_progress_callback=self.progress_function)  # Callback para progresso
+                ys = yt.streams.get_audio_only()
+                filepath = filedialog.asksaveasfilename(defaultextension=".mp3", filetypes=[("MP3 files", "*.mp3")])
+                if filepath:  # Verifica se o usuário escolheu um caminho
+                    self.label_info.configure(text="Realizando o Download | AGUARDE |")
+                    ys.download(output_path=os.path.dirname(filepath), filename=os.path.basename(filepath))
+                    self.label_info.configure(text="Seu vídeo foi baixado com sucesso em formato MP3!")
+                else:
+                    self.label_info.configure(text="Download cancelado ou falhou !!!")
+                self.box_link.delete(0, 'end')  # Limpa o campo de link
+                self.box_link.insert(0, "Digite ou Cole aqui o seu link aqui !!!")
+        except Exception as e:
+            self.label_info.configure(text="Ocorreu um erro, cole ou digite um link |VÁLIDO|")
+            self.box_link.delete(0, 'end')  # Limpa o campo de link   
+            self.box_link.insert(0, "Digite ou Cole aqui o seu link aqui !!!")    
+
 # Variável root recebendo comando CTk que faz aparecer a janela
 root = ctk.CTk()
 
 # Criando a Classe da aplicação onde receberá todas execuções
-class Application():
+class Application(functs):
     def __init__(self):  # Construtor que recebe as propriedades do aplicativo
         self.root = root
         self.screen()
@@ -136,7 +187,7 @@ class Application():
                                      corner_radius=50,
                                      fg_color="#992002",
                                      hover_color="#04026b",
-                                     command="")
+                                     command=self.threading_MP3)
         self.btn_mp3.place(relx=0.31,
                            rely=0.5,
                            relwidth=0.2,
@@ -150,7 +201,7 @@ class Application():
                                      corner_radius=50,
                                      fg_color="#992002",
                                      hover_color="#04026b",
-                                     command="")
+                                     command=self.threading_MP4)
         self.btn_mp4.place(relx=0.53,
                            rely=0.5,
                            relwidth=0.2,
