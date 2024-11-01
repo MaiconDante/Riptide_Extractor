@@ -17,7 +17,6 @@ class functs():
            
     def function_MP4(self):
         try:
-            print("mp4 triggered")
             link = self.box_link.get()  # Obtendo o link do input
             if link is None or link.strip() == "":
                 self.label_info.configure(text="Ocorreu um erro, cole ou digite um link |VÁLIDO|")  
@@ -33,7 +32,6 @@ class functs():
                     self.label_info.configure(text="Download cancelado ou falhou !!!")
             self.box_link.delete(0, 'end')  # Limpa o campo de link
         except Exception as e:
-            print(e)
             self.label_info.configure(text="Ocorreu um erro, cole ou digite um link |VÁLIDO|")
             self.box_link.delete(0, 'end')  # Limpa o campo de link
 
@@ -43,7 +41,6 @@ class functs():
         
     def function_MP3(self):
         try:
-            print("mp3 triggered")
             link = self.box_link.get()  # Obtendo o link do input
             if link is None or link.strip() == "":
                 self.label_info.configure(text="Ocorreu um erro, cole ou digite um link |VÁLIDO|")
@@ -59,7 +56,6 @@ class functs():
                     self.label_info.configure(text="Download cancelado ou falhou !!!")
                 self.box_link.delete(0, 'end')  # Limpa o campo de link
         except Exception as e:
-            print(e)
             self.label_info.configure(text="Ocorreu um erro, cole ou digite um link |VÁLIDO|")
             self.box_link.delete(0, 'end')  # Limpa o campo de link    
 
