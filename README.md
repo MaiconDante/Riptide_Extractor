@@ -14,11 +14,10 @@ Riptide_Extractor é um projeto que permite a extração de áudio (MP3) ou víd
 - Biblioteca `pytubefix` para download de vídeos do YouTube
 - Biblioteca `customtkinter` para interface gráfica do aplicativo
 - Biblioteca `tkinter` para colocar imagem e caixa de diálogo
+- Biblioteca `pillow` para manipular imagem e colocar no icone da janela
 
 ### Instalando dependências
 
 Certifique-se de que as dependências estejam instaladas:
 
-pip install pytubefix
-pip install customtkinter
-pip install tkinter
+pip install pytubefix, customtkinter, tkinter, pillow
